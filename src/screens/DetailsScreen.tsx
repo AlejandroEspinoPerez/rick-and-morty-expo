@@ -7,6 +7,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { RouteProp } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
@@ -60,31 +61,39 @@ export default function DetailsScreen({ route }: Props) {
 
   return (
     <ScrollView style={styles.container}>
+      {/* Fondo con degradado */}
+      <LinearGradient
+        colors={["#0F2027", "#203A43", "#2C5364"]}
+        style={styles.background}
+      />
+
       {/* Imagen del personaje */}
-      <Image source={{ uri: character.image }} style={styles.poster} />
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: character.image }} style={styles.poster} />
+      </View>
 
       {/* Información Principal */}
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>{character.name}</Text>
         {character.type ? (
-          <Text style={styles.subtitle}>Tipo: {character.type}</Text>
+          <Text style={styles.subtitle}>🛸 Tipo: {character.type}</Text>
         ) : null}
-        <Text style={styles.subtitle}>Especie: {character.species}</Text>
-        <Text style={styles.subtitle}>Género: {character.gender}</Text>
-        <Text style={styles.subtitle}>Estado: {character.status}</Text>
-        <Text style={styles.subtitle}>Origen: {character.origin.name}</Text>
+        <Text style={styles.subtitle}>🧬 Especie: {character.species}</Text>
+        <Text style={styles.subtitle}>🚻 Género: {character.gender}</Text>
+        <Text style={styles.subtitle}>❤️ Estado: {character.status}</Text>
+        <Text style={styles.subtitle}>🌍 Origen: {character.origin.name}</Text>
         <Text style={styles.subtitle}>
-          Ubicación actual: {character.location.name}
+          📍 Ubicación actual: {character.location.name}
         </Text>
       </View>
 
       {/* Lista de episodios */}
       <View style={styles.episodeContainer}>
-        <Text style={styles.sectionTitle}>Aparece en estos episodios:</Text>
+        <Text style={styles.sectionTitle}>📺 Aparece en estos episodios:</Text>
         {character.episodes.length > 0 ? (
           character.episodes.map((ep: any, index: number) => (
             <Text key={index} style={styles.episodeText}>
-              {ep.episode} - {ep.name} ({ep.air_date})
+              🎬 {ep.episode} - {ep.name} ({ep.air_date})
             </Text>
           ))
         ) : (
@@ -100,45 +109,65 @@ export default function DetailsScreen({ route }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#0F2027", // Fondo oscuro para un estilo más moderno
+  },
+  background: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  },
+  imageContainer: {
+    alignItems: "center",
+    marginTop: 20,
   },
   poster: {
-    width: "100%",
-    height: 400,
-    resizeMode: "cover",
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    borderWidth: 4,
+    borderColor: "#00B5CC",
   },
   detailsContainer: {
-    padding: 15,
+    marginTop: 20,
+    backgroundColor: "rgba(255, 255, 255, 0.1)", // Transparencia para efecto moderno
+    padding: 20,
+    borderRadius: 15,
+    marginHorizontal: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 6,
   },
   title: {
-    fontSize: 28,
+    fontSize: 30,
     fontWeight: "bold",
-    color: "#333",
+    color: "#FFF",
     marginBottom: 10,
     textAlign: "center",
   },
   subtitle: {
     fontSize: 18,
-    color: "#555",
+    color: "#EEE",
     marginBottom: 5,
     textAlign: "center",
   },
   episodeContainer: {
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     padding: 15,
     marginTop: 20,
-    backgroundColor: "#f8f8f8",
     borderRadius: 10,
-    marginHorizontal: 10,
+    marginHorizontal: 20,
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
-    color: "#333",
+    color: "#FFF",
+    textAlign: "center",
   },
   episodeText: {
     fontSize: 16,
-    color: "#666",
+    color: "#DDD",
     marginBottom: 5,
   },
   noEpisodesText: {
